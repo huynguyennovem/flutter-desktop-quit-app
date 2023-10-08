@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void _handleKeyEvent(RawKeyEvent value) async {
+  void _handleKeyEvent(RawKeyEvent value) {
     if (!_isKeyboardListenerEnabled) return;
 
     // If user pressed Command/Control + W keys, quit the app
