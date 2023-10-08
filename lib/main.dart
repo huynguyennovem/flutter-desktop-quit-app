@@ -8,7 +8,7 @@ void main() {
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
-	navigatorKey: _navigatorKey,
+  navigatorKey: _navigatorKey,
   routes: <RouteBase>[
     GoRoute(
       path: '/',
@@ -31,7 +31,6 @@ final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
 bool _isKeyboardListenerEnabled = true;
 
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -44,21 +43,19 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
-			builder: (context, child) {
-				RawKeyboard.instance.addListener((RawKeyEvent value) => _handleKeyEvent(value));
-				return child ?? const SizedBox.shrink();
-			},
+      builder: (context, child) {
+        RawKeyboard.instance.addListener((RawKeyEvent value) => _handleKeyEvent(value));
+        return child ?? const SizedBox.shrink();
+      },
     );
   }
 
   void _handleKeyEvent(RawKeyEvent value) async {
-    if (!_isKeyboardListenerEnabled)  return;
+    if (!_isKeyboardListenerEnabled) return;
 
     // If user pressed Command/Control + W keys, quit the app
-    if (value.isMetaPressed && value.logicalKey == LogicalKeyboardKey.keyW ||
-        value.isControlPressed && value.logicalKey == LogicalKeyboardKey.keyW) {
-
-      if(_navigatorKey.currentContext == null) return;
+    if (value.isMetaPressed && value.logicalKey == LogicalKeyboardKey.keyW || value.isControlPressed && value.logicalKey == LogicalKeyboardKey.keyW) {
+      if (_navigatorKey.currentContext == null) return;
 
       // show confirm dialog
       _showQuitAppConfirmationDialog(_navigatorKey.currentContext!, (confirmCallback) {
@@ -72,11 +69,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _showQuitAppConfirmationDialog(BuildContext context, Function(bool)? confirmCallback) {
-		// Disable the keyboard listener.
+    // Disable the keyboard listener.
     _isKeyboardListenerEnabled = false;
 
     showDialog(
-			barrierDismissible: false,
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -85,7 +82,7 @@ class _MyAppState extends State<MyApp> {
           actions: [
             TextButton(
               onPressed: () {
-								confirmCallback?.call(false);
+                confirmCallback?.call(false);
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text('Cancel'),
@@ -93,7 +90,7 @@ class _MyAppState extends State<MyApp> {
             TextButton(
               onPressed: () {
                 // Close the app
-								confirmCallback?.call(true);
+                confirmCallback?.call(true);
               },
               child: const Text('Quit'),
             ),
@@ -102,7 +99,6 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
-	
 }
 
 /// The home screen
